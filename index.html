@@ -1,11 +1,229 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>My First Website</title>
+<meta charset="UTF-8">
+<title>Happy Birthday</title>
+
+<style>
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#container {
+  text-align: center;
+  animation: fadeIn 1.5s forwards;
+}
+
+h1 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+
+button {
+  padding: 10px 22px;
+  margin: 10px;
+  font-size: 1em;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  background: white;
+}
+
+.message {
+  margin-top: 20px;
+  font-size: 1.2em;
+}
+
+.fade-out {
+  animation: fadeOut 0.9s forwards;
+}
+
+.center-message {
+  position: absolute;
+  font-size: 1.6em;
+  text-align: center;
+  opacity: 0;
+  animation: centerFade 1s forwards;
+  padding: 20px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fadeOut {
+  to { opacity: 0; transform: scale(0.95); }
+}
+
+@keyframes centerFade {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+</style>
 </head>
+
 <body>
-  <h1>Hello World</h1>
-  <p>This is my first website.</p>
-  <button onclick="alert('Button works!')">Click me</button>
+
+<div id="container">
+  <h1>HAPPYYY BIRTHDAYY 🎀🎉✨</h1>
+  <div id="content"></div>
+</div>
+
+<script>
+const container = document.getElementById("container");
+const content = document.getElementById("content");
+
+startFirst();
+
+function startFirst() {
+  content.innerHTML = `
+    <p>Did you enjoy watching those videos?</p>
+    <button onclick="answerFirst(true)">Yes</button>
+    <button onclick="answerFirst(false)">No</button>
+  `;
+}
+
+function answerFirst(ans) {
+  content.innerHTML = `
+    <p class="message">${ans ? 
+      "I am so glad for that, thanks for watching" :
+      "I'm so sorry about that, I will make it better next time"}
+    </p>
+    <button onclick="cuteQ()">Next</button>
+  `;
+}
+
+function cuteQ() {
+  content.innerHTML = `
+    <p>Are you cute?</p>
+    <button onclick="cuteYes()">Yes</button>
+    <button id="noBtn" onclick="cuteNo()">No</button>
+  `;
+}
+
+function cuteYes() {
+  content.innerHTML = `
+    <p class="message">Of course, you are the cutest</p>
+    <button onclick="cutestQ()">Next</button>
+  `;
+}
+
+let noCount = 0;
+function cuteNo() {
+  const noBtn = document.getElementById("noBtn");
+  noCount++;
+  noBtn.style.marginLeft = `${noCount * 30}px`;
+
+  if (noCount >= 2) {
+    content.innerHTML = `
+      <p class="message">Yes, because you are not only cute, you are the cutest</p>
+      <button onclick="cutestQ()">Next</button>
+    `;
+  }
+}
+
+function cutestQ() {
+  content.innerHTML = `
+    <p>You are the cutest right?</p>
+    <button onclick="finalCute()">Yes</button>
+    <button onclick="finalCute()">No</button>
+  `;
+}
+
+function finalCute() {
+  content.innerHTML = `
+    <p class="message">kuchuu puchuu cutie 🎀</p>
+    <button onclick="blushQ()">Next</button>
+  `;
+}
+
+function blushQ() {
+  content.innerHTML = `
+    <p>Do you know which thing is enough to make me blush?</p>
+    ${options()}
+  `;
+}
+
+function options() {
+  const opts = [
+    ["my smile","*already blushed to death*"],
+    ["my cuteness","Already beyond heavenly feeling"],
+    ["my eyes","Your stare can put me on vibration mode"],
+    ["my words","Easiest way to liquefy me"],
+    ["my presence","That’s more than enough for me"],
+    ["my name","It’s my most favorite word"],
+    ["my shadow","Yup… but it’s too far away"],
+    ["my voice","Only sound I can hear on full volume"],
+    ["my face","Too beautiful, my eyes get blessed"],
+    ["my clone","I’m into original *you* only"],
+    ["my existence","*blushing right now*"],
+    ["everything",""]
+  ];
+
+  return opts.map(o =>
+    `<button onclick="handleBlush('${o[0]}','${o[1]}')">${o[0]}</button>`
+  ).join("");
+}
+
+function handleBlush(choice, msg) {
+  if (choice === "everything") {
+    everythingFlow();
+  } else {
+    content.innerHTML += `<p class="message">${msg}</p>`;
+  }
+}
+
+/* 🔥 FIXED EVERYTHING FLOW */
+function everythingFlow() {
+  container.classList.add("fade-out");
+
+  setTimeout(() => {
+    container.style.display = "none";
+
+    const lines = [
+      "Everything about you is enough to make me blush all the time",
+      "Everything of you is very precious for me",
+      "Thank you so much for giving me your time",
+      "Happiest birthday kuchii puchii 💗\nKeep your cute smile and have a great day"
+    ];
+
+    const center = document.createElement("div");
+    center.className = "center-message";
+    document.body.appendChild(center);
+
+    let index = 0;
+
+    center.innerText = lines[index];
+    index++;
+
+    const interval = setInterval(() => {
+      if (index >= lines.length) {
+        clearInterval(interval);
+        return;
+      }
+
+      center.style.opacity = "0";
+
+      setTimeout(() => {
+        center.innerText = lines[index];
+        center.style.opacity = "1";
+        index++;
+      }, 600);
+
+    }, 3800);
+
+  }, 900);
+}
+</script>
+
 </body>
 </html>
